@@ -1,0 +1,45 @@
+- name: Install EPEL
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items:
+    - epel-release
+  run_once: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: epel_result
+  notify: yum_makecache
+  tags:
+    - provision
+
+- name: Import the EPEL key
+  rpm_key:
+    key: "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+    state: present
+  run_once: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags:
+    - provision
+
+- name: Install prerequisite software
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items:
+    - libselinux-python
+    - htop
+    - vim
+  run_once: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: package_result
+  tags:
+    - provision
+
+- name: debug package_result
+  debug: msg="{{ package_result }}"
+  when: package_result is defined
+  tags:
+    - debug
+
+# vim: set filetype=ansible sts=2

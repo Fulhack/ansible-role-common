@@ -1,0 +1,4 @@
+---
+- include: "provision-{{ ansible_os_family }}.yml"
+
+# vim: set filetype=ansible sts=2
