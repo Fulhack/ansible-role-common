@@ -1,1 +1,22 @@
 ---
+fulhack_repos:
+  - name: ius
+    repo_enable: "{{ enable_ius_repo|default(False) }}"
+    repo_install: "{{ install_ius_repo|default(False) }}"
+    repo_name: "IUS Community Packages for {{ ansible_distribution }} {{ ansible_distribution_major_version }} - {{ ansible_userspace_architecture }}"
+    package_name: ius-release
+    gpg_key_url: https://raw.githubusercontent.com/iuscommunity-pkg/ius-release/master/SOURCES/IUS-COMMUNITY-GPG-KEY
+    repo_rpm: "https://centos{{ ansible_distribution_major_version }}.iuscommunity.org/ius-release.rpm"
+
+  - name: nginx
+    repo_enable: "{{ enable_nginx_repo|default(False) }}"
+    repo_install: "{{ install_nginx_repo|default(False) }}"
+    repo_name: "NGiNX Packages for {{ ansible_distribution }} {{ ansible_distribution_major_version }} - {{ ansible_userspace_architecture }}"
+    package_name: nginx-release
+    gpg_key_url: http://nginx.org/keys/nginx_signing.key
+    repo_rpm: "http://nginx.org/packages/centos/{{ ansible_distribution_major_version }}/noarch/RPMS/nginx-release-centos-{{ ansible_distribution_major_version }}-0.el{{ ansible_distribution_major_version }}.ngx.noarch.rpm"
+
+ius_packages:
+  - yum-plugin-replace
+  - git2u
+  - tmux2u
