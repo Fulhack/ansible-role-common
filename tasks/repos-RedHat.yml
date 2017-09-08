@@ -48,3 +48,15 @@
   when:
     - is_installed == True
     - item.gpg_key_url is defined
+
+- include:
+    packages-ius.yml
+  when:
+    - item.name == "ius"
+    - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
+
+- include:
+    packages-elrepo.yml
+  when:
+    - item.name == "elrepo"
+    - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
