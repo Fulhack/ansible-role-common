@@ -1,0 +1,15 @@
+---
+- name: Install ELRepo software
+  yum:
+    name: "{{ elrepo_package }}"
+    state: present
+    update_cache: true
+    enablerepo: elrepo-kernel
+  with_items:
+    - "{{ elrepo_packages }}"
+  loop_control:
+    loop_var: elrepo_package
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: package_result
+  tags:
+    - provision

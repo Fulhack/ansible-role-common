@@ -1,0 +1,14 @@
+---
+- name: Install IUS software
+  yum:
+    name: "{{ ius_package }}"
+    state: present
+    update_cache: true
+  with_items:
+    - "{{ ius_packages }}"
+  loop_control:
+    loop_var: ius_package
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: package_result
+  tags:
+    - provision
