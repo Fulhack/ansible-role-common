@@ -1,3 +1,8 @@
+- include: repos-RedHat.yml
+  with_items:
+    - "{{ fulhack_repos }}"
+  tags: [ 'provision' ]
+
 - name: Install EPEL
   yum:
     name: "{{ item }}"
@@ -5,21 +10,17 @@
     update_cache: true
   with_items:
     - epel-release
-  run_once: true
   ignore_errors: "{{ ansible_check_mode }}"
   register: epel_result
   notify: yum_makecache
-  tags:
-    - provision
+  tags: [ 'provision' ]
 
 - name: Import the EPEL key
   rpm_key:
     key: "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
     state: present
-  run_once: true
   ignore_errors: "{{ ansible_check_mode }}"
-  tags:
-    - provision
+  tags: [ 'provision' ]
 
 - name: Install prerequisite software
   yum:
@@ -30,11 +31,9 @@
     - libselinux-python
     - htop
     - vim
-  run_once: true
   ignore_errors: "{{ ansible_check_mode }}"
   register: package_result
-  tags:
-    - provision
+  tags: [ 'provision' ]
 
 - name: debug package_result
   debug: msg="{{ package_result }}"
