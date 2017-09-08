@@ -21,12 +21,14 @@
     - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 0
     - item.repo_install == True
 
-- name: "Install GPG key"
+- name: "Install GPG key for repo {{ item.name }}"
   rpm_key:
     key: "{{ item.gpg_key_url }}"
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
-  when: ( item.gpg_key_url is defined )
+  when:
+    - item.gpg_key_url is defined
+    - item.repo_install == True
 
 - name: "Enable repo {{ item.name }}"
   yum_repository:
