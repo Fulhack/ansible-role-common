@@ -1,4 +1,12 @@
 ---
 - include: "provision-{{ ansible_os_family }}.yml"
 
+- name: Install custom ps1
+  copy:
+    src: files/ps1.sh
+    dest: /etc/profile.d/ps1.sh
+    owner: root
+    group: root
+    mode: 0755
+
 # vim: set filetype=ansible sts=2
