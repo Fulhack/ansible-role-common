@@ -2,7 +2,7 @@
 galaxy_info:
   author: "Marcus Berglof (Fulhack)"
   description: Common improvements to vanilla CentOS
-  license: BSD-3
+  license: MIT
   min_ansible_version: '2.3'
   platforms:
   - name: EL

@@ -35,4 +35,4 @@ problem, but no ansible module can deal with this so it's on the TODO list.
 
 ### Licence
 
-BSD-3
+MIT
