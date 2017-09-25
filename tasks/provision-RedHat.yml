@@ -38,7 +38,6 @@
 - name: debug package_result
   debug: msg="{{ package_result }}"
   when: package_result is defined
-  tags:
-    - debug
+  tags: [ 'debug' ]
 
 # vim: set filetype=ansible sts=2

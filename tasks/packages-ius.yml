@@ -10,5 +10,4 @@
     loop_var: ius_package
   ignore_errors: "{{ ansible_check_mode }}"
   register: package_result
-  tags:
-    - provision
+  tags: [ 'provision' ]

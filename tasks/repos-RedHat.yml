@@ -8,8 +8,7 @@
 
 - name: debug repo_status
   debug: msg="{{ is_installed.results|selectattr("yumstate", "match", "installed")|list|length }}"
-  tags:
-    - debug
+  tags: [ 'debug' ]
 
 - name: "Installing repo for {{ item.repo_name }}"
   yum:
