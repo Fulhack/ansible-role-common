@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
 
   config.vm.provision "ansible" do |ansible|
-#    ansible.galaxy_role_file = "requirements.yml"
     ansible.playbook = "vagrant-playbook.yml"
   end
 end
