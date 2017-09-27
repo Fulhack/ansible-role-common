@@ -20,6 +20,12 @@
     - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 0
     - item.repo_install == True
 
+- name: Set fact if repo is installed
+  set_fact: "repo_{{ item.name }} = True"
+  when:
+    - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 0
+    - item.repo_install == True
+
 - name: "Install GPG key for repo {{ item.name }}"
   rpm_key:
     key: "{{ item.gpg_key_url }}"
@@ -34,9 +40,7 @@
     name: "{{ item.repo_id }}"
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
-  when:
-    - item.repo_enable == True
-    - is_installed == True
+  when: ( item.repo_enable == True ) or ( is_installed == True )
 
 - name: "Enable GPG check for repo {{ item.name }}"
   yum_repository:
@@ -44,18 +48,25 @@
     gpgcheck: yes
     gpgkey: "{{ item.gpg_key_url }}"
   ignore_errors: "{{ ansible_check_mode }}"
-  when:
-    - is_installed == True
-    - item.gpg_key_url is defined
+  when: ( item.gpg_key_url is defined and item.repo_enable == True ) or ( is_installed == True )
+  # when:
+  #   - is_installed == True
+  #   - item.gpg_key_url is defined
+
+- name: "Debug fact repo_{{ item.name }}"
+  debug: msg="repo_{{ item.name }}"
 
 - include:
     packages-ius.yml
   when:
-    - item.name == "ius"
-    - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
+    - install_ius_repo == True
+    # - item.name == "ius"
+    # - item.repo_enable == True
+    # - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
 
 - include:
     packages-elrepo.yml
   when:
     - item.name == "elrepo"
-    - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
+    - item.repo_enable == True
+    # - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
