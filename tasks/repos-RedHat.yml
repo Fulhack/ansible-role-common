@@ -37,14 +37,14 @@
 
 - name: "Enable repo {{ item.name }}"
   yum_repository:
-    name: "{{ item.repo_id }}"
+    name: "{{ item.repo_name }}"
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
   when: ( item.repo_enable == True ) or ( is_installed == True )
 
 - name: "Enable GPG check for repo {{ item.name }}"
   yum_repository:
-    name: "{{ item.repo_id }}"
+    name: "{{ item.repo_name }}"
     gpgcheck: yes
     gpgkey: "{{ item.gpg_key_url }}"
   ignore_errors: "{{ ansible_check_mode }}"
