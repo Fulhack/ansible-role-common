@@ -24,6 +24,9 @@ fulhack_repos:
     gpg_key_url: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
     repo_rpm: http://elrepo.org/linux/kernel/el7/x86_64/RPMS/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 
+install_ius_repo: True
+install_elrepo_repo: False
+
 ius_packages:
   - yum-plugin-replace
   - git2u
