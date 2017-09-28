@@ -40,7 +40,9 @@
     name: "{{ item.repo_name }}"
     enabled: yes
   ignore_errors: "{{ ansible_check_mode }}"
-  when: ( item.repo_enable == True ) or ( is_installed == True )
+  when:
+    - ( item.repo_enable == True ) or ( is_installed == True )
+    - ( item.base_url defined ) or ( item.mirror_list defined )
 
 - name: "Enable GPG check for repo {{ item.name }}"
   yum_repository:
