@@ -66,7 +66,7 @@
     packages-ius.yml
   when:
     - install_ius_repo == True
-    # - item.name == "ius"
+    - item.name == "ius"
     # - item.repo_enable == True
     # - is_installed.results|selectattr("yumstate", "match", "installed")|list|length == 1
 
